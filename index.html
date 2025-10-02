@@ -1,55 +1,62 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Acceleration Audio | The global leader in accelerating music</title>
-
-    <link rel="stylesheet" href="output.css" />
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <title>Acceleration Audio | The global leader in accelerating music</title>
+      <link rel="stylesheet" href="output.css">
   </head>
-  <body>
-    <h1>Acceleration Audio</h1>
+  <body class="bg-background">
+    
+    <!-- header -->
+    <div class="bg-black py-5">
+      <h1 class="text-white text-3xl font-black text-center uppercase tracking-wider">Acceleration Audio</h1>
+    </div>
 
-    <i data-lucide="x"></i>
-    <i data-lucide="menu"></i>
+    <section class="w-full px-[15%]">
 
-    <button id="playButton">
-      <i data-lucide="play" class="w-50 h-50"></i>
-    </button>
-
-    <a href="">
-      <i data-lucide="play" class="text-transparent fill-amber-600"></i>
-    </a>
-
-    <a href="">
-      <i data-lucide="play" class="text-amber-600 fill-transparent"></i>
-    </a>
-
-    <!-- <div class="icon-play"></div> -->
-    <button id="pauseButton">
-      <i data-lucide="pause" class="text-transparent fill-amber-600 w-50 h-60">
-      </i>
-    </button>
-
-    <button id="pauseButton2">
-      <i data-lucide="pause" class="text-amber-600 fill-transparent"> </i>
-    </button>
-
-    <p>
-      <progress id="progress" value="0" max="1" style="width:100%"></progress>
-
-      <div id="custom-progress" class="w-full h-8 bg-amber-100 trasition-all">
-        <div id="custom-progress-bar" class="w-0 h-8 bg-amber-500 z-10"></div>
+      <!-- album, title, artist -->
+      <div class="pt-10 pb-3 text-center text-white">
+        <img id="albumArt" src="" alt="" class="invisible w-70 h-70 m-auto rounded-2xl">
+        <p class="pt-6">
+          <span id="songTitle" class="text-3xl font-black">Song Name</span>
+        </p>
+        <p class="pt-3">
+          <span id="currentSpeed" class="text-2xl font-black left-[45%] right-[45%]">1.0x</span>
+        </p>
       </div>
-    </p>
 
-    <audio src="" id="audioPlayer" controls></audio>
+      <!-- buttons -->
+      <div class="text-center items-center">
+        <button id="backButton" class="pr-5">
+          <i data-lucide="skip-back" class="text-white fill-white w-[50px] h-[50px] active:text-highlight active:fill-highlight"></i>
+        </button>
+        <button id="playButton">
+          <i data-lucide="play" class="text-white fill-white w-[70px] h-[70px] relative top-[7px] active:text-highlight active:fill-highlight"></i>
+        </button>
+        <button id="pauseButton" class="hidden">
+          <i data-lucide="pause" class="text-white fill-white w-[70px] h-[70px] relative top-[7px] active:text-highlight active:fill-highlight"></i>
+        </button>        
+        <button id="skipButton" class="pl-5">
+          <i data-lucide="skip-forward" class="text-white fill-white w-[50px] h-[50px] active:text-highlight active:fill-highlight"></i>
+        </button>
+      </div>
+      
+      <!-- progress bar -->
+      <div class="py-8">
+        <p>
+          <progress id="progressBar" value="0" max="1" class="w-[300px] block m-auto rounded-full h-10"></progress>
+          <div id="progressFill" class="rounded-full w-0"></div>
+        </p>
+      </div>
+      <audio src="" id="audioPlayer"></audio>
 
-    <script src="main.js"></script>
+    </section>
 
+    <!-- scripts -->
+    <script src="main.js"></script>  
     <script src="https://unpkg.com/lucide@latest"></script>
-    <script>
-      lucide.createIcons();
-    </script>
+    <script>lucide.createIcons()</script>
+
   </body>
 </html>
