@@ -18,11 +18,17 @@ const songs = [
   { file: "Better Days - LAKEY INSPIRED.mp3", songTitle: "Better Days", albumArt: "Better Days.jpg" },
   { file: "autumn_sun.mp3", songTitle: "Autumn Sun", albumArt: "autumn_sun.png" },
   { file: "Polarity.mp3", songTitle: "Polarity", albumArt: "Polarity.jpg" },
+  { file: "best_part_of_me.mp3", songTitle: "Best Part of Me", albumArt: "BestPart.jpg" },
+  { file: "just_relax.mp3", songTitle: "Just Relax", albumArt: "justRelax_img.jpeg" },
+  { file: "paranormal-is-real-leonell-cassio.mp3", songTitle: "Paranormal is Real", albumArt: "paranormal_real_500.jpg" },
+  { file: "Aidan.mp3", songTitle: "Aidan", albumArt: "Aidan.jpg" },
 ]
 
 function loadTrack(currentTrack) {
   audioPlayer.src = `/songs/${songs[currentTrack].file}`;
   audioPlayer.load();
+  progressBar.value = 0;
+  progressFill.style.width = "0%";
   audioPlayer.playbackRate = 1.0;
   currentSpeed.textContent = "1.0x";
 
@@ -73,7 +79,7 @@ skipButton.addEventListener("click", () => {
   loadTrack(currentTrack);
   
   // autoplay if not paused
-  if (!audioPlayer.paused) {
+  if (!audioPlayer.paused || playButton.classList.contains("hidden")) {
     audioPlayer.play();
   }
 });
@@ -102,14 +108,8 @@ backButton.addEventListener("click", () => {
 
 // autoplay next song when a song ends
 audioPlayer.addEventListener("ended", () => {
-  currentTrack += 1;
-
-  // loop if at end of list
-  if (currentTrack >= songs.length) {
-    currentTrack = 0;
-  }
-  loadTrack(currentTrack);
-  audioPlayer.play();
+    pauseButton.classList.add("hidden")
+    playButton.classList.remove("hidden")
 });
 
 // speed up song
@@ -129,21 +129,35 @@ audioPlayer.addEventListener("timeupdate", () => {
 // keybinds
 document.addEventListener("keydown", (event) => {
   switch (event.key.toLowerCase()) {
+    // m to mute
+    case "m":
+      event.preventDefault()
+      audioPlayer.muted = !audioPlayer.muted;
+      break;
+    // space to pause
     case " ":
-      if (audioPlayer.paused && startup === false) {
+      event.preventDefault()
+      if ((audioPlayer.paused || !playButton.classList.contains("hidden")) && startup === false) {
         audioPlayer.play()
 
         playButton.classList.add("hidden")
         pauseButton.classList.remove("hidden")
-      } else if (!audioPlayer.paused) {
+      } else if (!audioPlayer.paused || playButton.classList.contains("hidden")) {
         audioPlayer.pause()
         
         pauseButton.classList.add("hidden")
         playButton.classList.remove("hidden")
       }
       break;
-    case "m":
-      audioPlayer.muted = !audioPlayer.muted;
+    // right arrow to skip 10 seconds
+    case "arrowright":
+      event.preventDefault()
+      audioPlayer.currentTime = Math.min(audioPlayer.currentTime + 10, audioPlayer.duration);
+      break;
+    // left arrow to rewind 10 seconds
+    case "arrowleft":
+      event.preventDefault()
+      audioPlayer.currentTime = Math.max(audioPlayer.currentTime - 10, 0);
       break;
   }
 });
